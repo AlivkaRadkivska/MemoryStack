@@ -10,13 +10,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { NotesService } from './notes.service';
-import { AddNoteDto } from './dto/add-note.dto';
+import { NoteDto } from './dto/note.dto';
 import { NoteEntity } from './note.entity';
 import { FilterNotesDto } from './dto/filter-notes.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from 'src/auth/user.entity';
 import { GetUser } from 'src/auth/get-user.decorator';
-import { UpdateNoteDto } from './dto/update-note.dto';
 
 @Controller('notes')
 @UseGuards(AuthGuard())
@@ -41,7 +40,7 @@ export class NotesController {
 
   @Post()
   addNote(
-    @Body() addNoteDto: AddNoteDto,
+    @Body() addNoteDto: NoteDto,
     @GetUser() user: UserEntity,
   ): Promise<NoteEntity> {
     return this.notesService.addOne(addNoteDto, user);
@@ -50,7 +49,7 @@ export class NotesController {
   @Patch('/:id')
   updateNoteById(
     @Param('id') id: string,
-    @Body() updateNoteDto: UpdateNoteDto,
+    @Body() updateNoteDto: NoteDto,
     @GetUser() user: UserEntity,
   ): Promise<NoteEntity> {
     return this.notesService.updateOne(id, updateNoteDto, user);

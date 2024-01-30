@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.text-shadow{
+  text-shadow: 2px 2px 10px #000000c2;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color:  #7930a6;
+  border-radius: 20px;
+  border: none;
+}
+
+.notebook-texture{
+  background-image: repeating-linear-gradient(#ffffff00, #ffffff00 26px, #2a28aab2 26px, #ffffff00 28px);
+  background-size: 100%;
+}

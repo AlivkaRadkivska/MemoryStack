@@ -21,15 +21,15 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async getAll(): Promise<UserEntity[]> {
-    return this.userRepository.find();
-  }
-
   async getCurrent(user: UserEntity): Promise<UserEntity> {
-    return this.userRepository.findOneBy({ id: user.id });
+    return await this.userRepository.findOneBy({ id: user.id });
   }
 
-  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
+  async getOneByUsername(username: string): Promise<UserEntity | null> {
+    return await this.userRepository.findOneBy({ username });
+  }
+
+  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<AuthResultDto> {
     const { username, password } = authCredentialsDto;
 
     const salt = await bcrypt.genSalt(9);
@@ -42,26 +42,31 @@ export class AuthService {
 
     try {
       await this.userRepository.save(user);
+      const accessToken: string = await this.generateToken(username);
+
+      return { accessToken };
     } catch (error) {
       if (error.code == 23505)
-        throw new ConflictException('Username is already taken');
+        throw new ConflictException(['Username is already taken']);
       else throw new InternalServerErrorException();
     }
   }
 
   async signIn(authCredentialsDto: AuthCredentialsDto): Promise<AuthResultDto> {
     const { username, password } = authCredentialsDto;
-    const user: UserEntity = await this.userRepository.findOneBy({ username });
+    const user: UserEntity = await this.getOneByUsername(username);
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      const payload: JwtPayload = { username };
-      const accessToken: string = await this.jwtService.sign(payload);
+      const accessToken: string = await this.generateToken(username);
 
-      return { message: 'success', accessToken };
-    } else throw new UnauthorizedException('Wrong username or password');
+      return { accessToken };
+    } else throw new UnauthorizedException(['Wrong username or password']);
   }
 
-  async signOut(): Promise<void> {
-    return;
+  async generateToken(username: string): Promise<string> {
+    const payload: JwtPayload = { username };
+    const accessToken: string = await this.jwtService.sign(payload);
+
+    return accessToken;
   }
 }

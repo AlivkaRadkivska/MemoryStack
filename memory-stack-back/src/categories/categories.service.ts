@@ -7,6 +7,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { CategoryEntity } from './category.entity';
 import { UserEntity } from 'src/auth/user.entity';
+import { CategoryDto } from './dto/category.dto';
+import { FilterCategoriesDto } from './dto/filter-categories.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -15,13 +17,29 @@ export class CategoriesService {
     private readonly categoryRepository: Repository<CategoryEntity>,
   ) {}
 
-  async getAll(user: UserEntity): Promise<CategoryEntity[]> {
+  async getAll(
+    filterDto: FilterCategoriesDto,
+    user: UserEntity,
+  ): Promise<CategoryEntity[]> {
     const query = this.categoryRepository.createQueryBuilder('category');
+    const { search } = filterDto;
 
     query.where({ user });
+    if (search)
+      query.andWhere('(LOWER(note.name) LIKE LOWER(:search)', {
+        search: `%${search}%`,
+      });
+
     const categories = await query.getMany();
 
     return categories;
+  }
+
+  async getOneByName(
+    name: string,
+    user: UserEntity,
+  ): Promise<CategoryEntity | null> {
+    return await this.categoryRepository.findOneBy({ name, user });
   }
 
   async getOneById(id: string, user: UserEntity): Promise<CategoryEntity> {
@@ -32,7 +50,12 @@ export class CategoriesService {
     return found;
   }
 
-  async addOne(name: string, user: UserEntity): Promise<CategoryEntity> {
+  async addOne(
+    categoryDto: CategoryDto,
+    user: UserEntity,
+  ): Promise<CategoryEntity> {
+    const { name } = categoryDto;
+
     const category = this.categoryRepository.create({
       name,
       user,
@@ -44,10 +67,11 @@ export class CategoriesService {
 
   async updateOne(
     id: string,
-    name: string,
+    categoryDto: CategoryDto,
     user: UserEntity,
   ): Promise<CategoryEntity> {
     const category = await this.getOneById(id, user);
+    const { name } = categoryDto;
 
     const updated = { ...category, name };
     await this.categoryRepository.save(updated);
@@ -62,7 +86,9 @@ export class CategoriesService {
       res = await this.categoryRepository.delete({ id, user });
     } catch (error) {
       if (error.code == 23503)
-        throw new ConflictException('This category is using right now');
+        throw new ConflictException(
+          "This category is using and can't be deleted",
+        );
     }
 
     if (res.affected === 0) throw new NotFoundException();

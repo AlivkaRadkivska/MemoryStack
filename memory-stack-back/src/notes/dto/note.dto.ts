@@ -1,12 +1,13 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, MaxLength } from 'class-validator';
 import { CategoryEntity } from 'src/categories/category.entity';
 
-export class AddPhotoDto {
+export class NoteDto {
   @IsNotEmpty()
-  path: string;
+  @MaxLength(50)
+  title: string;
 
   @IsNotEmpty()
-  caption: string;
+  content: string;
 
   @IsNotEmpty()
   category: CategoryEntity;

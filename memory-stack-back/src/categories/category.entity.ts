@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { Validate } from 'class-validator';
 import { UserEntity } from 'src/auth/user.entity';
 import { NoteEntity } from 'src/notes/note.entity';
 import { PhotoEntity } from 'src/photos/photo.entity';

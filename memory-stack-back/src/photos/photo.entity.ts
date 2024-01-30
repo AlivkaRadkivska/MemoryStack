@@ -9,7 +9,7 @@ export class PhotoEntity {
   id: string;
 
   @Column()
-  path: string;
+  name: string;
 
   @Column()
   caption: string;

@@ -1,24 +1,23 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
+import type { Metadata } from 'next'
+import NotebookContainer from '@/components/notebook-container'
+import { nunito } from '@/fonts/nunito'
 
-const inter = Inter({ subsets: ['latin'] })
+
 
 export const metadata: Metadata = {
   title: 'Memory stack app',
-  description: 'A silly application to keep all your precious memories safe and sound.',
+  description: 'Our little silly application for your precious memories',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-          {children}
+    <html lang='en'>
+      <body className={nunito.className}>
+        <main className='flex min-h-screen flex-col items-center justify-center bg-green'>
+          <NotebookContainer>
+            {children}
+          </NotebookContainer>
         </main>
       </body>
     </html>

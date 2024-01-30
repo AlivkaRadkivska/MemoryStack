@@ -4,8 +4,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FilterPhotosDto } from './dto/filter-photos.dto';
 import { UserEntity } from 'src/auth/user.entity';
-import { AddPhotoDto } from './dto/add-photo.dto';
-import { UpdatePhotoDto } from './dto/update-photo.dto';
+import { PhotoDto } from './dto/photo.dto';
 
 @Injectable()
 export class PhotosService {
@@ -43,14 +42,11 @@ export class PhotosService {
     return found;
   }
 
-  async addOne(
-    addPhotoDto: AddPhotoDto,
-    user: UserEntity,
-  ): Promise<PhotoEntity> {
-    const { path, caption, date, category } = addPhotoDto;
+  async addOne(addPhotoDto: PhotoDto, user: UserEntity): Promise<PhotoEntity> {
+    const { name, caption, date, category } = addPhotoDto;
 
     const photo = this.photoRepository.create({
-      path,
+      name,
       caption,
       category,
       date,
@@ -63,7 +59,7 @@ export class PhotosService {
 
   async updateOne(
     id: string,
-    updatePhotoDto: UpdatePhotoDto,
+    updatePhotoDto: PhotoDto,
     user: UserEntity,
   ): Promise<PhotoEntity> {
     const photo = await this.getOneById(id, user);

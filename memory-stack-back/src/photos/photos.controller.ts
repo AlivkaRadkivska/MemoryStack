@@ -15,8 +15,7 @@ import { FilterPhotosDto } from './dto/filter-photos.dto';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { UserEntity } from 'src/auth/user.entity';
 import { PhotoEntity } from './photo.entity';
-import { AddPhotoDto } from './dto/add-photo.dto';
-import { UpdatePhotoDto } from './dto/update-photo.dto';
+import { PhotoDto } from './dto/photo.dto';
 
 @Controller('photos')
 @UseGuards(AuthGuard())
@@ -41,7 +40,7 @@ export class PhotosController {
 
   @Post()
   addPhoto(
-    @Body() addPhotoDto: AddPhotoDto,
+    @Body() addPhotoDto: PhotoDto,
     @GetUser() user: UserEntity,
   ): Promise<PhotoEntity> {
     return this.photosService.addOne(addPhotoDto, user);
@@ -50,7 +49,7 @@ export class PhotosController {
   @Patch('/:id')
   updatePhotoById(
     @Param('id') id: string,
-    @Body() updatePhotoDto: UpdatePhotoDto,
+    @Body() updatePhotoDto: PhotoDto,
     @GetUser() user: UserEntity,
   ): Promise<PhotoEntity> {
     return this.photosService.updateOne(id, updatePhotoDto, user);
