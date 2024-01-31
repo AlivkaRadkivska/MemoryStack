@@ -44,7 +44,13 @@ export class AuthService {
       await this.userRepository.save(user);
       const accessToken: string = await this.generateToken(username);
 
-      return { accessToken };
+      return {
+        user: {
+          id: user.id,
+          username,
+        },
+        accessToken,
+      };
     } catch (error) {
       if (error.code == 23505)
         throw new ConflictException(['Username is already taken']);
@@ -59,8 +65,18 @@ export class AuthService {
     if (user && (await bcrypt.compare(password, user.password))) {
       const accessToken: string = await this.generateToken(username);
 
-      return { accessToken };
+      return {
+        user: {
+          id: user.id,
+          username,
+        },
+        accessToken,
+      };
     } else throw new UnauthorizedException(['Wrong username or password']);
+  }
+
+  async signOut(): Promise<void> {
+    return;
   }
 
   async generateToken(username: string): Promise<string> {

@@ -4,7 +4,7 @@ import { Input } from '@/components/form-elements/input';
 import { PaperSheetContainer } from '@/components/paper-sheet-container';
 import { useFormState } from 'react-dom';
 import { badScript } from '@/fonts/bad-script';
-import { signUp, signIn } from '@/services/auth-actions';
+import { signUp, logIn } from '@/services/auth-actions';
 
 interface UserFormT {
   title: string;
@@ -12,7 +12,7 @@ interface UserFormT {
 }
 
 export function UserForm({ title, addNew }: UserFormT) {
-  const [formState, submit] = useFormState(addNew ? signUp : signIn, { message: [] });
+  const [formState, submit] = useFormState(addNew ? signUp : logIn, { message: [] });
 
   return (
     <PaperSheetContainer>

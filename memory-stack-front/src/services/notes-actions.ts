@@ -34,8 +34,6 @@ export async function addNote(
     date: payload.get('date') as unknown as Date,
     category: category,
   }
-
-  console.log(data);
   
   const res = await postData('/notes', data);
 
@@ -68,8 +66,10 @@ export async function editNote(
 }
 
 export async function deleteNote(
-  id: string,
+  _state: { message: string[] }, 
+  payload: FormData,
 ): Promise<{ message: string[] }> {
+  const id = payload.get('id') as string;
   const res = await deleteData(`/notes/${id}`);
 
   if('message' in res)

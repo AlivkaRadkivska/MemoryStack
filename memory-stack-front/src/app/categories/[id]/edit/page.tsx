@@ -3,6 +3,7 @@ import { StampButton } from '@/components/buttons';
 import { CategoryForm } from '@/components/categories/category-form';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { DeleteCategoryForm } from '@/components/categories/delete-category-form';
 
 interface EditCategoryPageT {
   params: {
@@ -28,14 +29,7 @@ export default async function EditCategoryPage({ params: { id } }: EditCategoryP
         <>
           <CategoryForm title='Editing existing category' addNew={false} category={res} />
 
-          <p className='text-indigo'>
-            *by the way, categories containing notes or/and photos won&apos;t be deleted
-          </p>
-          <StampButton red={true}>
-            <Link href={`/categories/${id}/delete`}>
-              delete this one
-            </Link>
-          </StampButton>
+          <DeleteCategoryForm category={res} />
         </>
       }
     </div>

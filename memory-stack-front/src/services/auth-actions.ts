@@ -1,11 +1,8 @@
 'use server';
 import { postData } from '@/utils/axios-factory';
-import { removeToken, saveToken } from '@/utils/token-handler';
+import { deleteCookies, setCookies } from '@/utils/cookies-factory';
 import { redirect } from 'next/navigation';
 
-export async function getCurrUser() {}
-
-// ?
 export async function signUp(
   _state: { message: string[] }, 
   payload: FormData,
@@ -21,16 +18,18 @@ export async function signUp(
 
   const res = await postData('/auth/signup', data);
   
-  if('message' in res) {
-    console.log(res.message);
+  if('message' in res)
     return { message: res.message }
-  } else {
-    saveToken(res.data.accessToken)
+  else {
+    await setCookies([
+      { key: 'token', value: res.data.accessToken }, 
+      { key: 'username', value: res.data.user.username },
+    ]);
     redirect('/');
   }
 }
 
-export async function signIn(
+export async function logIn(
   _state: { message: string[] }, 
   payload: FormData,
 ): Promise<{ message: string[] }> {
@@ -43,13 +42,19 @@ export async function signIn(
 
   if('message' in res)
     return { message: res.message };
-  else{
-    saveToken(res.data.accessToken)
+  else {
+    await setCookies([
+      { key: 'token', value: res.data.accessToken }, 
+      { key: 'username', value: res.data.user.username },
+    ]);
     redirect('/');
   }
 }
 
-export async function signOut() {
-  removeToken();
+export async function logOut(
+  _state: { message: string[] }, 
+  _payload: FormData,
+): Promise<{ message: string[] }> {
+  await deleteCookies(['username', 'token']);
   redirect('/');
 }

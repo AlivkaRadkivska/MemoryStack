@@ -86,9 +86,9 @@ export class CategoriesService {
       res = await this.categoryRepository.delete({ id, user });
     } catch (error) {
       if (error.code == 23503)
-        throw new ConflictException(
+        throw new ConflictException([
           "This category is using and can't be deleted",
-        );
+        ]);
     }
 
     if (res.affected === 0) throw new NotFoundException();

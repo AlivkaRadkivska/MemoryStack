@@ -1,7 +1,7 @@
 import { StampButton } from '@/components/buttons';
 import Link from 'next/link';
 
-export default function LoadingData() {
+export default async function LoadingData() {
   return (
     <div className='flex flex-col bg-gray w-full h-full rounded-b-xl px-8 py-4 items-center justify-center'>
       <div className='flex justify-start self-start w-full'>

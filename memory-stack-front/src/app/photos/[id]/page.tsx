@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import { badScript } from '@/fonts/bad-script';
 import { getPhoto } from '@/services/photos-actions';
 import Photo from '@/components/photos/photo';
+import { DeletePhotoForm } from '@/components/photos/delete-photo-form';
 
 interface PhotoPageT {
   params: {
@@ -35,7 +36,7 @@ export default async function PhotoPage({ params: { id } }: PhotoPageT) {
           <PaperSheetContainer>
             <p className='text-blue -mt-7 text-end w-full'>{format(res.date, 'MMMM dd, yyyy')}</p>
             <p className='text-indigo text-center w-full font-semibold'>{res.caption}</p>
-            <Photo src={`/uploads/${res.name}`} />
+            <Photo src={`/uploads/${res.name}`} name={res.name} />
           </PaperSheetContainer>
 
           <div className='flex justify-between w-full'>
@@ -44,11 +45,7 @@ export default async function PhotoPage({ params: { id } }: PhotoPageT) {
                 edit this one
               </Link>
             </StampButton>
-            <StampButton red={true}>
-              <Link href={`/photos/${id}/delete`}>
-                delete this one
-              </Link>
-            </StampButton>
+            <DeletePhotoForm photo={res} />
           </div>
         </>
       }

@@ -1,8 +1,8 @@
 import { badScript } from '@/fonts/bad-script';
-import { getToken } from '@/utils/token-handler';
+import { getCookie } from '@/utils/cookies-factory';
 
 export default async function MenuPage() {
-  console.log(getToken());
+  const username = await getCookie('username');
 
   return (
     <div className='flex flex-col bg-purple w-full h-full rounded-b-xl p-4 items-center justify-center'>
@@ -15,7 +15,11 @@ export default async function MenuPage() {
           <p className={`${badScript.className}`}>
             those memories belong to
           </p>
-          <p className={`${badScript.className} !font-semibold pt-1 text-red`}>username</p>
+          {username ?
+            <p className={`${badScript.className} !font-semibold pt-0 text-red text-2xl`}>{username}</p>
+          :
+            <p className={`${badScript.className} !font-semibold pt-1 text-purpleGray`}>(here can be your name)</p>
+          }
         </div>
       </div>
       <div className='flex w-full h-full justify-end items-end'>

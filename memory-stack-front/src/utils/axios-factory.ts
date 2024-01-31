@@ -1,14 +1,17 @@
 import axios, { AxiosResponse } from 'axios';
+import { cookies } from 'next/headers';
+import { getCookie } from './cookies-factory';
 
-//! move to env
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlYSI' +
-  'sImlhdCI6MTcwNjU2Njk5MywiZXhwIjoxNzA3MTcxNzkzfQ.aJYpMUT0nl-lk1_2J--6m5EmWXOiB_4wck0D15mfIR4';
 //! move to env
 const baseUrl = 'http://localhost:3001';
 
-const headers = {
-  'Authorization': `Bearer ${token}`,
-  'Content-Type': 'application/json',
+async function getHeaders() {
+  const token = await getCookie('token');
+
+  return {
+    'Authorization': `${token ? 'Bearer ' + token : ''}`,
+    'Content-Type': 'application/json',
+  }
 }
 
 async function sendAxiosRequest(
@@ -32,6 +35,8 @@ async function sendAxiosRequest(
 export async function getData(
   path: string,
 ): Promise<AxiosResponse | { message: string[] }> {
+  const headers = await getHeaders();
+
   const req = axios.get(
     `${baseUrl}${path}`, 
     { headers }
@@ -44,6 +49,8 @@ export async function postData(
   path: string,
   data: object,
 ): Promise<AxiosResponse | { message: string[] }> {
+  const headers = await getHeaders();
+
   const req = axios.post(
     `${baseUrl}${path}`, 
     { ...data }, 
@@ -57,6 +64,8 @@ export async function patchData(
   path: string,
   data: object,
 ): Promise<AxiosResponse | { message: string[] }> {
+  const headers = await getHeaders();
+
   const req = axios.patch(
     `${baseUrl}${path}`, 
     { ...data }, 
@@ -69,6 +78,8 @@ export async function patchData(
 export async function deleteData(
   path: string,
 ): Promise<AxiosResponse | { message: string[] }> {
+  const headers = await getHeaders();
+  
   const req = axios.delete( 
     `${baseUrl}${path}`, 
     { headers }

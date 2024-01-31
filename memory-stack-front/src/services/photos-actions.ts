@@ -86,9 +86,11 @@ export async function editPhoto(
 }
 
 export async function deletePhoto(
-  id: string,
-  photoName: string,
+  _state: { message: string[] }, 
+  payload: FormData,
 ): Promise<{ message: string[] }> {
+  const id = payload.get('id') as string;
+  const photoName = payload.get('name') as string;
   const res = await deleteData(`/photos/${id}`);
   await deleteImage(photoName);
 

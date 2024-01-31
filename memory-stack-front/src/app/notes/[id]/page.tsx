@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { format } from 'date-fns';
 import { badScript } from '@/fonts/bad-script';
+import { DeleteNoteForm } from '@/components/notes/delete-note-form';
 
 interface NotePageT {
   params: {
@@ -43,11 +44,8 @@ export default async function NotePage({ params: { id } }: NotePageT) {
                 edit this one
               </Link>
             </StampButton>
-            <StampButton red={true}>
-              <Link href={`/notes/${id}/delete`}>
-                delete this one
-              </Link>
-            </StampButton>
+            
+            <DeleteNoteForm note={res} />
           </div>
         </>
       }

@@ -1,6 +1,7 @@
 'use server';
 import { CategoryT } from '@/types/category';
 import { deleteData, getData, postData, patchData } from '@/utils/axios-factory';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export async function getCategories(): Promise<CategoryT[] | { message: string[] }> {
@@ -53,8 +54,10 @@ export async function editCategory(
 }
 
 export async function deleteCategory(
-  id: string,
+  _state: { message: string[] }, 
+  payload: FormData,
 ): Promise<{ message: string[] }> {
+  const id = payload.get('id') as string;
   const res = await deleteData(`/categories/${id}`);
 
   if('message' in res)

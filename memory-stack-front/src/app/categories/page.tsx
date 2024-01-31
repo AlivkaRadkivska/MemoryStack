@@ -20,31 +20,37 @@ export default async function CategoriesPage() {
       </div>
 
       <PaperSheetContainer>
-        {res instanceof Array && 
-          (res.length > 0) ? res.map((el, i) =>
-          <div key={el.id} className={`${badScript.className} flex w-full justify-between`}>
-            <p>{++i}) {el.name}</p>
-            <Link className='hover:underline decoration-wavy decoration-indigo ease-in-out duration-200' href={`/categories/${el.id}/edit`}>
-              <p>🖊️/❌</p>
-            </Link>
-          </div>
-        ) : <>
-          <p className={`${badScript.className} text-purple`}>Please add categories for your notes and photos</p>
-          <p className={`${badScript.className} text-purple`}>They&apos;ll help you to find right notes and photos much easier.</p>
-        </> }
+        {!('message' in res) 
+          ? res instanceof Array && (res.length > 0) 
+           ? res.map((el, i) =>
+              <div key={el.id} className={`${badScript.className} flex w-full justify-between`}>
+                <p>{++i}) {el.name}</p>
+                <Link className='hover:underline decoration-wavy decoration-indigo ease-in-out duration-200' href={`/categories/${el.id}/edit`}>
+                  <p>🖊️/❌</p>
+                </Link>
+              </div>) 
+            : <>
+                <p className={`${badScript.className}`}>
+                  Please add categories for your notes and photos.
+                </p>
+                <p className={`${badScript.className}`}>
+                  They&apos;ll help you to find right notes and photos much easier.
+                </p>
+              </>
 
-        {'message' in res && 
-          <p>{res.message}</p>
+          : <p className={`${badScript.className} `}>{res.message}</p>
         }
       </PaperSheetContainer>
 
-      <div className='flex justify-end w-full'>
-        <StampButton>
-          <Link href='/categories/add'>
-            add category
-          </Link>
-        </StampButton>
-      </div>
+      {!('message' in res) &&
+        <div className='flex justify-end w-full'>
+          <StampButton>
+            <Link href='/categories/add'>
+              add category
+            </Link>
+          </StampButton>
+        </div>
+      }
     </div>
   )
 }

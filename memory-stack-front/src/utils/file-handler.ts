@@ -18,8 +18,8 @@ export async function uploadImage(image: File): Promise<{ imageName: string } | 
 
   try {
     await writeFile(`${uploadDir}/${newImageName}`, buffer);
-  } catch(err) {
-    console.log(err);
+  } catch(error) {
+    console.log(error);
   }
 
   return { imageName: newImageName };
@@ -28,7 +28,7 @@ export async function uploadImage(image: File): Promise<{ imageName: string } | 
 export async function deleteImage(newImageName: string): Promise<void> {
   try {
     await fs.unlink(`${uploadDir}/${newImageName}`);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 }

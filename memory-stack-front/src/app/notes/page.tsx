@@ -20,29 +20,33 @@ export default async function NotesPage() {
       </div>
 
       <PaperSheetContainer>
-        {res instanceof Array && 
-          (res.length > 0) ? res.map((el, i) =>
-          <div key={el.id} className={`${badScript.className} flex w-full justify-start`}>
-            <Link className='hover:underline decoration-wavy decoration-indigo ease-in-out 
-            duration-200 flex w-full justify-between' href={`/notes/${el.id}`}>
-              <p>{++i}) {el.title.length > 35 ? el.title.substring(0, 35) + '...' : el.title}</p>
-              <p>details&gt;&gt;</p>
-            </Link>
-          </div>
-        ) : <p className={`${badScript.className} text-purple`}>No way, you didn&apos;t add any note yet (0.0)</p>}
+        {!('message' in res) 
+          ? res instanceof Array && (res.length > 0) 
+            ? res.map((el, i) =>
+              <div key={el.id} className={`${badScript.className} flex w-full justify-start`}>
+                <Link className='hover:underline decoration-wavy decoration-indigo ease-in-out 
+                duration-200 flex w-full justify-between' href={`/notes/${el.id}`}>
+                  <p>{++i}) {el.title.length > 35 ? el.title.substring(0, 35) + '...' : el.title}</p>
+                  <p>details&gt;&gt;</p>
+                </Link>
+              </div>) 
+            : <p className={`${badScript.className}`}>
+              No way, you didn&apos;t add any note yet (0.0)
+            </p>
 
-        {'message' in res && 
-          <p>{res.message}</p>
+          : <p className={`${badScript.className} `}>{res.message}</p>
         }
       </PaperSheetContainer>
 
-      <div className='flex justify-end w-full'>
-        <StampButton>
-          <Link href='/notes/add'>
-            add note
-          </Link>
-        </StampButton>
-      </div>
+      {!('message' in res) &&
+        <div className='flex justify-end w-full'>
+          <StampButton>
+            <Link href='/notes/add'>
+              add note
+            </Link>
+          </StampButton>
+        </div>
+      }
     </div>
   )
 }
