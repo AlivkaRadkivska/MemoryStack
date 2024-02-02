@@ -1,23 +1,40 @@
 import { StampButton } from '@/components/buttons';
+import CategoryFilterInput from '@/components/filtering/category-filter';
+import SearchInput from '@/components/filtering/search';
 import { PaperSheetContainer } from '@/components/paper-sheet-container';
 import { badScript } from '@/fonts/bad-script';
+import { getCategories } from '@/services/categories-actions';
 import { getNotes } from '@/services/notes-actions';
+import { FiltersT } from '@/types/filters';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export default async function NotesPage() {
-  const res = await getNotes();
-  if(!res) notFound();
+interface NotesPageT {
+  searchParams: FiltersT
+}
 
+export default async function NotesPage({ searchParams }: NotesPageT) {
+  const res = await getNotes(searchParams);
+  if(!res) notFound();
+  
+  const categories = await getCategories();
+  
   return (
     <div className='flex flex-col bg-gray w-full h-full rounded-b-xl px-8 py-4 items-center justify-start'>
-      <div className='flex justify-start w-full'>
+      <div className='flex justify-between w-full items-center'>
         <StampButton>
           <Link href='/'>
             to home page
           </Link>
         </StampButton>
+        <CategoryFilterInput
+          path='/notes' 
+          prevValue={searchParams.categoryId ? searchParams.categoryId : 'any'} 
+          categories={!('message' in categories) ? categories : []}
+        />
       </div>
+
+      <SearchInput path='/notes' prevValue={searchParams.search ? searchParams.search : ''} />
 
       <PaperSheetContainer>
         {!('message' in res) 

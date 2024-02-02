@@ -18,7 +18,7 @@ export function StickerButton({ children, active, red }: ButtonT){
 export function StampButton({ children, red }: ButtonT){
   return (
     <div className={`bg-gray border-2 ${red ? 'border-red text-red' : 'border-indigo text-indigo'} my-1
-      border-dashed rounded px-4 py-1 max-w-xs min-w-sm hover:border-lime easy-in-out duration-300 
+      border-dashed rounded px-4 py-1 max-w-xs min-w-sm hover:border-lime easy-in-out duration-300
       !font-semibold ${badScript.className} cursor-pointer hover:text-lime hover:-rotate-6`}>
       {children}
     </div>

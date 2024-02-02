@@ -4,9 +4,14 @@ import { deleteData, getData, postData, patchData } from '@/utils/axios-factory'
 import { redirect } from 'next/navigation';
 import { getCategory } from './categories-actions';
 import { deleteImage, uploadImage } from '@/utils/file-handler';
+import { FiltersT } from '@/types/filters';
 
-export async function getPhotos(): Promise<PhotoT[] | { message: string[] }> {
-  const res = await getData('/photos');
+export async function getPhotos(filters?: FiltersT): Promise<PhotoT[] | { message: string[] }> {
+  let path = '/photos';
+  if(filters?.categoryId) path += `?categoryId=${filters?.categoryId}`;
+  if(filters?.search) path += `?search=${filters?.search}`;
+
+  const res = await getData(path);
   
   if('data' in res)
     return res.data;

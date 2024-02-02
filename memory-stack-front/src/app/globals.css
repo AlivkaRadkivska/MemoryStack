@@ -22,3 +22,19 @@
   background-image: repeating-linear-gradient(#ffffff00, #ffffff00 26px, #2a28aab2 26px, #ffffff00 28px);
   background-size: 100%;
 }
+
+select {
+  background-color: transparent;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  line-height: 26px;
+}
+
+option {
+  background-color: transparent;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  line-height: 26px;
+}

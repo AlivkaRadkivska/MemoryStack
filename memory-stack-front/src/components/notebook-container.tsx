@@ -21,7 +21,9 @@ export default function NotebookContainer({ authenticated, children }: NotebookC
       }
 
       <div className='bg-blue w-md h-md pt-2 pl-4 pb-4 rounded rounded-b-2xl'>
-        {children}
+        <div className='bg-gray w-full h-full'>
+          {children}
+        </div>
       </div>
       
       <div className='flex flex-col gap-3 py-5 items-start'>

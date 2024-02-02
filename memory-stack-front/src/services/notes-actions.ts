@@ -3,9 +3,14 @@ import { NoteT } from '@/types/note';
 import { deleteData, getData, postData, patchData } from '@/utils/axios-factory';
 import { redirect } from 'next/navigation';
 import { getCategory } from './categories-actions';
+import { FiltersT } from '@/types/filters';
 
-export async function getNotes(): Promise<NoteT[] | { message: string[] }> {
-  const res = await getData('/notes');
+export async function getNotes(filters?: FiltersT): Promise<NoteT[] | { message: string[] }> {
+  let path = '/notes';
+  if(filters?.categoryId) path += `?categoryId=${filters?.categoryId}`;
+  if(filters?.search) path += `?search=${filters?.search}`;
+
+  const res = await getData(path);
   
   if('data' in res)
     return res.data;

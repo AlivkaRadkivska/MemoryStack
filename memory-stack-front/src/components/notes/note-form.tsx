@@ -54,7 +54,7 @@ export default function NoteForm({ title, addNew, categories, note }: NoteFormT)
           />
 
           <Textarea 
-            label='content:' 
+            label='content:'
             id='content' 
             name='content' 
             placeholder='text'

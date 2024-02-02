@@ -21,16 +21,6 @@ export function CategorySelector({ label, options, name, id, prevValue }: Catego
   return (
     <label htmlFor={id} className='flex flex-col w-full text-center text-blue'> 
       {label}
-      {/* <input className={`${badScript.className} w-full bg-gray p-1 m-2 !font-semibold
-        border-y-2 border-dashed text-purple focus:border-dashed focus:border-indigo focus:text-indigo 
-        focus:outline-none`}
-        type={type}
-        name={name}
-        id={id}
-        placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
-      /> */}
       <select className={`${badScript.className} w-full bg-gray p-1 m-2 !font-semibold
       border-y-2 border-dashed text-blue focus:border-dashed focus:border-indigo focus:text-indigo 
       focus:outline-none`} name={name} id={id} value={value} onChange={handleChange}>
