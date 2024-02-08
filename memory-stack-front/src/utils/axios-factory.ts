@@ -1,9 +1,10 @@
-import axios, { AxiosResponse } from 'axios';
-import { cookies } from 'next/headers';
-import { getCookie } from './cookies-factory';
+export const revalidate = 3600;
 
-//! move to env
-const baseUrl = 'http://localhost:3001';
+import axios, { AxiosResponse } from 'axios';
+import { getCookie } from './cookies-factory';
+import { cache } from 'react';
+
+const baseUrl = process.env.BACKEND_URL;
 
 async function getHeaders() {
   const token = await getCookie('token');
@@ -14,10 +15,10 @@ async function getHeaders() {
   }
 }
 
-async function sendAxiosRequest(
+const sendAxiosRequest =  cache(async (
   req: Promise<AxiosResponse<any, any>>,
-): Promise<AxiosResponse | { message: string[] }> {
-  try{
+): Promise<AxiosResponse | { message: string[] }> => {
+  try {
     const res = await req;
 
     return res;
@@ -30,7 +31,7 @@ async function sendAxiosRequest(
       return { message: ['something went wrong, please try later'] };
     }
   }
-}
+});
 
 export async function getData(
   path: string,

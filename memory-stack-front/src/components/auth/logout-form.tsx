@@ -1,13 +1,10 @@
 'use client';
 import { StickerButton } from '@/components/buttons';
-import { useFormState } from 'react-dom';
 import { logOut } from '@/services/auth-actions';
 
-export function LogoutForm() {
-  const [formState, submit] = useFormState(logOut, { message: [] });
-
+export async function LogoutForm() {
   return (
-    <form action={submit}>
+    <form action={logOut}>
       <StickerButton red={true}>
         <input 
           type='submit' 

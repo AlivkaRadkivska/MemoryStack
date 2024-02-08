@@ -21,7 +21,7 @@ export default function NotebookContainer({ authenticated, children }: NotebookC
       }
 
       <div className='bg-blue w-md h-md pt-2 pl-4 pb-4 rounded rounded-b-2xl'>
-        <div className='bg-gray w-full h-full'>
+        <div className='bg-gray w-full h-full rounded-b-xl'>
           {children}
         </div>
       </div>

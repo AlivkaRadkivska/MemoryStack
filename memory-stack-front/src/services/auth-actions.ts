@@ -51,10 +51,7 @@ export async function logIn(
   }
 }
 
-export async function logOut(
-  _state: { message: string[] }, 
-  _payload: FormData,
-): Promise<{ message: string[] }> {
+export async function logOut(): Promise<void> {
   await deleteCookies(['username', 'token']);
   redirect('/');
 }

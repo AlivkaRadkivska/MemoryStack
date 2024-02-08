@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "SET STAGE=dev& next build",
+    "start": "SET STAGE=dev& next start",
+    "lint": "SET STAGE=dev& next lint"
   },
   "dependencies": {
     "axios": "^1.6.5",
