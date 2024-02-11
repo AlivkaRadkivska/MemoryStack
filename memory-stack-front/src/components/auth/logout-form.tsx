@@ -2,7 +2,7 @@
 import { StickerButton } from '@/components/buttons';
 import { logOut } from '@/services/auth-actions';
 
-export async function LogoutForm() {
+export function LogoutForm() {
   return (
     <form action={logOut}>
       <StickerButton red={true}>
