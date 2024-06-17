@@ -1,7 +1,6 @@
 'use server';
 import { CategoryT } from '@/types/category';
 import { deleteData, getData, postData, patchData } from '@/utils/axios-factory';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export async function getCategories(): Promise<CategoryT[] | { message: string[] }> {
