@@ -7,11 +7,11 @@ export function getDataSourceOptions(
 ): PostgresConnectionOptions {
   return {
     type: 'postgres',
-    host: configService.get('DATABASE_HOST'),
-    port: configService.get('DATABASE_PORT'),
-    username: configService.get('DATABASE_USER'),
-    password: configService.get('DATABASE_PASSWORD'),
-    database: configService.get('DATABASE_DATABASE'),
+    host: configService.get('PGHOST'),
+    port: configService.get('PGPORT'),
+    username: configService.get('PGUSER'),
+    password: configService.get('PGPASSWORD'),
+    database: configService.get('PGDATABASE'),
     entities: [__dirname + '/../**/*.entity.{js,ts}'],
     synchronize: true,
   };
