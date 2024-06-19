@@ -1,33 +1,33 @@
-import { writeFile } from 'fs/promises';
-import { v4 as uuid } from 'uuid';
-import fs from 'fs/promises';
-
-const uploadDir = './public/uploads';
+import { v4 as uuid } from "uuid";
+import { put, del } from "@vercel/blob";
 
 function getNewImageName(name: string) {
   let newName = uuid();
-  return newName + name.substring(name.lastIndexOf('.'), name.length);
+  return newName + name.substring(name.lastIndexOf("."), name.length);
 }
 
-export async function uploadImage(image: File): Promise<{ imageName: string } | { message: string }> {
-  if(!image.type.startsWith('image'))
-    return { message: 'provide image please' };
+export async function uploadImage(
+  image: File
+): Promise<{ image: string } | { message: string }> {
+  if (!image.type.startsWith("image"))
+    return { message: "provide image please" };
 
   const newImageName = getNewImageName(image.name);
-  const buffer = Buffer.from(await image.arrayBuffer());
 
   try {
-    await writeFile(`${uploadDir}/${newImageName}`, buffer);
-  } catch(error) {
+    const blob = await put(newImageName, image, {
+      access: "public",
+    });
+    return { image: blob.url };
+  } catch (error) {
     console.log(error);
+    return { message: "Щось пішло не так." };
   }
-
-  return { imageName: newImageName };
 }
 
-export async function deleteImage(newImageName: string): Promise<void> {
+export async function deleteImage(image: string): Promise<void> {
   try {
-    await fs.unlink(`${uploadDir}/${newImageName}`);
+    del(image);
   } catch (error) {
     console.log(error);
   }

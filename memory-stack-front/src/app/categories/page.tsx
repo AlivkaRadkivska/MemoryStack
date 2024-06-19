@@ -1,7 +1,7 @@
 import { getCategories } from '@/services/categories-actions';
 import { StampButton } from '@/components/buttons';
 import { PaperSheetContainer } from '@/components/paper-sheet-container';
-import { badScript } from '@/fonts/bad-script';
+import { badScript } from '@/services/fonts/bad-script';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 

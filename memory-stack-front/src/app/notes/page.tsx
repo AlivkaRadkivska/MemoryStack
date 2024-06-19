@@ -2,7 +2,7 @@ import { StampButton } from '@/components/buttons';
 import CategoryFilterInput from '@/components/filtering/category-filter';
 import SearchInput from '@/components/filtering/search';
 import { PaperSheetContainer } from '@/components/paper-sheet-container';
-import { badScript } from '@/fonts/bad-script';
+import { badScript } from '@/services/fonts/bad-script';
 import { getCategories } from '@/services/categories-actions';
 import { getNotes } from '@/services/notes-actions';
 import { FiltersT } from '@/types/filters';

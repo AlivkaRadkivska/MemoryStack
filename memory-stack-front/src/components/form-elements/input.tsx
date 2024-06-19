@@ -1,5 +1,5 @@
 'use client';
-import { badScript } from '@/fonts/bad-script';
+import { badScript } from '@/services/fonts/bad-script';
 import { SetStateAction, useState } from 'react';
 
 interface FormInputT {

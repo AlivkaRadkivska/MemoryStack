@@ -7,7 +7,7 @@ import { Input } from '../form-elements/input';
 import { PaperSheetContainer } from '../paper-sheet-container';
 import { CategorySelector } from '../form-elements/category-selector';
 import { CategoryT } from '@/types/category';
-import { badScript } from '@/fonts/bad-script';
+import { badScript } from '@/services/fonts/bad-script';
 import { Textarea } from '../form-elements/textarea';
 import { format } from 'date-fns';
 import { redirect } from 'next/navigation';

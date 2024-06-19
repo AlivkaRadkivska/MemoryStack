@@ -1,4 +1,4 @@
-import { badScript } from '@/fonts/bad-script';
+import { badScript } from '@/services/fonts/bad-script';
 import { getCookie } from '@/utils/cookies-factory';
 
 export default async function MenuPage() {

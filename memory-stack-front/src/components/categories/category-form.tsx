@@ -5,7 +5,7 @@ import { Input } from '@/components/form-elements/input';
 import { PaperSheetContainer } from '@/components/paper-sheet-container';
 import { CategoryT } from '@/types/category';
 import { useFormState } from 'react-dom';
-import { badScript } from '@/fonts/bad-script';
+import { badScript } from '@/services/fonts/bad-script';
 
 interface CategoryFormT {
   title: string;

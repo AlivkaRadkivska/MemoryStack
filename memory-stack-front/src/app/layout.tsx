@@ -1,7 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import NotebookContainer from '@/components/notebook-container'
-import { nunito } from '@/fonts/nunito'
+import { nunito } from '@/services/fonts/nunito'
 import { getCookie } from '@/utils/cookies-factory'
 
 export const metadata: Metadata = {

@@ -1,4 +1,4 @@
-import { badScript } from '@/fonts/bad-script';
+import { badScript } from '@/services/fonts/bad-script';
 
 interface ButtonT {
   children: React.ReactNode,
