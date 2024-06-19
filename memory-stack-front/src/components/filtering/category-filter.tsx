@@ -1,46 +1,38 @@
-'use client';
-import { CategoryT } from '@/types/category';
-import { StampButton } from '../buttons';
-import { redirect } from 'next/navigation';
-import { SetStateAction, useState } from 'react';
+"use client";
+import { CategoryT } from "@/types/category";
+import { StampButton } from "../buttons";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-interface CategoryFilterInputT {
-  prevValue: string;
-  categories: CategoryT[];
-  path: string;
-}
+export default function CategoryFilterInput({ categories }: { categories: CategoryT[] }) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
-export default function CategoryFilterInput({ prevValue, path, categories }: CategoryFilterInputT) {
-  const [categoryId, setCategoryId] = useState(prevValue)
+  function handleChange(value: string) {
+    const params = new URLSearchParams(searchParams);
+    params.delete("search");
+    if (value === "any") params.delete("categoryId");
+    else params.set("categoryId", value);
 
-  function handleChange(e: { target: { value: SetStateAction<string>; }; }) {
-    setCategoryId(e.target.value);
+    replace(`${pathname}?${params.toString()}`);
   }
-
-  if(categoryId != prevValue && categoryId === 'any')
-    redirect(path);
-  
-  if(categoryId != prevValue)
-    redirect(`${path}?categoryId=${categoryId}`);
-
 
   return (
     <StampButton>
-      <form className='-m-1'>
-        <select 
-          className='cursor-pointer' 
-          value={categoryId} 
-          name='categoryId' 
-          id='categoryId' 
-          onChange={handleChange}
-        >
-          <option value='any'>Any category</option>
-          {!('message' in categories) && categories instanceof Array &&
-            categories.map((el) =>
-              <option key={el.id} value={el.id}>{el.name}</option>
-            )}
-        </select>
-      </form>
+      <select
+        className="cursor-pointer text-center -m-1"
+        name="categoryId"
+        id="categoryId"
+        onChange={(e) => handleChange(e.target.value)}
+        defaultValue={searchParams.get("categoryId")?.toString()}
+      >
+        <option value="any">Any category</option>
+        {categories.map((el) => (
+          <option key={el.id} value={el.id}>
+            {el.name}
+          </option>
+        ))}
+      </select>
     </StampButton>
   );
 }

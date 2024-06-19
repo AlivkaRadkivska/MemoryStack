@@ -32,8 +32,8 @@ export default async function NotePage({ params: { id } }: NotePageT) {
       ) : (
         <>
           <PaperSheetContainer>
-            <p className="text-blue -mt-7 text-end w-full">{format(res.date, "MMMM dd, yyyy")}</p>
-            <p className="text-indigo text-center w-full font-semibold">{res.title}</p>
+            <p className="text-blue text-end w-full">{format(res.date, "MMMM dd, yyyy")}</p>
+            <p className="text-purple text-center w-full font-semibold">{res.title}</p>
             <p className="text-blue">
               {res.content.split("\n").map((item, i) => (
                 <span className="mb-1" key={i}>
